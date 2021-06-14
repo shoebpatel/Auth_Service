@@ -41,45 +41,45 @@ Independent Authentication+Authorization Service with resource service (Micro-Se
   1. Auth Service
   2. Resource Service
 
-  * Auth Service is an independent microservice used for authentication, authorization & as an "API gateway" to fetch resources from Resource Service. actually resource service is hidden from outside world any route of Resource Service has to go through the Auth service for user authentication.
-
-  * Resource Service has all the resources, info of the user & has his own authorization token to access the resource service 
-   which is saved in Auth Service & share in headers('Authorization').
-
- 1. SignUp
-   - User can sign up with '/api/signup' route
-
- 2. login
-   - When user,admin or owner login, below payload is saved inside the Json Web Token & authorization on routes are based on the userTypeID
-     saved in the payload.
-   eg:: {
-				  userId
-				  userTypeID
-				  email
-			  }
- 
- 3. Auth Service has three private routes used
-   a. api/getUserData
-      - only users can access this route
-      - get user data by userId present in JWT provided by the user
-
-   b. api/admin
-      - only admin & owner can access this route
-      - if userTypeID is owner or admin
-
-   c. api/owner
-      - only owner can access this route
-      - if userTypeID is owner
-
-4. Forget Password
-   1. api/requestResetPassword
-     - above api sends a confirmation mail to the client with [URL + token + userId]
-     - token is just randomBytes of hex strings which gets store in token table in mysql
- 
-   2. api/passwordReset
-     - above api gets hit when user clicks the URL which has the token & userId
-     - cross check the above token with userId in token table
-     - if token match reset the password & destroy the token
+     * Auth Service is an independent microservice used for authentication, authorization & as an "API gateway" to fetch resources from Resource Service. actually resource service is hidden from outside world any route of Resource Service has to go through the Auth service for user authentication.
+   
+     * Resource Service has all the resources, info of the user & has his own authorization token to access the resource service 
+      which is saved in Auth Service & share in headers('Authorization').
+   
+    1. SignUp
+      - User can sign up with '/api/signup' route
+   
+    2. login
+      - When user,admin or owner login, below payload is saved inside the Json Web Token & authorization on routes are based on the userTypeID
+        saved in the payload.
+      eg:: {
+   				  userId
+   				  userTypeID
+   				  email
+   			  }
+    
+    3. Auth Service has three private routes used
+      1. api/getUserData
+         - only users can access this route
+         - get user data by userId present in JWT provided by the user
+   
+      2. api/admin
+         - only admin & owner can access this route
+         - if userTypeID is owner or admin
+   
+      3. api/owner
+         - only owner can access this route
+         - if userTypeID is owner
+   
+    4. Forget Password
+       1. api/requestResetPassword
+         - above api sends a confirmation mail to the client with [URL + token + userId]
+         - token is just randomBytes of hex strings which gets store in token table in mysql
+     
+       2. api/passwordReset
+         - above api gets hit when user clicks the URL which has the token & userId
+         - cross check the above token with userId in token table
+         - if token match reset the password & destroy the token
 
 
 * Database Model Schema
