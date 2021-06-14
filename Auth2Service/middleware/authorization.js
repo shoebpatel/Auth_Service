@@ -7,7 +7,6 @@ const {
 } = require('../helper/secret.json');
 
 module.exports = (req, res, next) => {
-
     console.log('req.headers.authorization:: ', req.headers.authorization);
     let token = req.headers.authorization
 
