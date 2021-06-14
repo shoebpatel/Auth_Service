@@ -36,8 +36,7 @@ Independent Authentication+Authorization Service with resource service (Micro-Se
 * Do you think this task is gonna benefit you in the job ?
   ∙ 'Yes'
 
-* System Design
- - Microservice Architecture
+* System Design - Microservice Architecture
   1. Auth Service
   2. Resource Service
 
