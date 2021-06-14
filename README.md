@@ -58,17 +58,17 @@ Independent Authentication+Authorization Service with resource service (Micro-Se
    				  email
    			  }
     
-    3. Auth Service has three private routes used
-    
-      1. api/getUserData
+    3. Auth Service has three private routes:
+
+      i. api/getUserData
          - only users can access this route
          - get user data by userId present in JWT provided by the user
    
-      2. api/admin
+      ii. api/admin
          - only admin & owner can access this route
          - if userTypeID is owner or admin
    
-      3. api/owner
+      iii. api/owner
          - only owner can access this route
          - if userTypeID is owner
    
