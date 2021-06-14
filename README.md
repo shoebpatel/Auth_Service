@@ -1,8 +1,10 @@
 # Auth_Service
 Independent Authentication+Authorization Service with resource service (Micro-Service Architecture)
 
+![alt text](https://github.com/shoebpatel/Auth_Service/blob/main/design_flow.png)
 
-# Antarctica_Code_Test
+
+
 
 Libraries used:
 1. express
