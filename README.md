@@ -50,12 +50,13 @@ Independent Authentication+Authorization Service with resource service (Micro-Se
          
           2. login
             - When user,admin or owner login, below payload is saved inside the Json Web Token & authorization on routes are based on the userTypeID
-              saved in the payload.<br/>            
-{
-		userId,
-		userTypeID,
-		email
-}
+              saved in the payload.<br/>
+            
+            {
+   	      			userId,
+   	      			userTypeID,
+   	      			email
+   	        }
           
           3. Auth Service has three private routes:
             - Api Names has been maintained inside the ACL(access control list) table in mysql
