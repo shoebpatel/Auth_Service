@@ -1,12 +1,14 @@
+const ACL = require('../model/acl');
 const {
-    jwt
+    jwt,
+    safePromise
 } = require('../helper/require-helper');
 
 const {
     JWT_SECRET
 } = require('../helper/secret.json');
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
     console.log('req.headers.authorization:: ', req.headers.authorization);
     let token = req.headers.authorization
 
@@ -22,32 +24,33 @@ module.exports = (req, res, next) => {
         const user = jwt.verify(token, JWT_SECRET);
         console.log('user: ', user);
 
-        let req_url = req.baseUrl + req.route.path;
+        let req_url = req.route.path;
+
+        console.log('req_url: ', req_url);
 
         // * Check authorization 
-        // * 1 = User
-        if (req_url.includes("/getUserData")) {
-            if (user.userTypeID !== 1) {
-                return res.status(401).send("Unauthorized!");
+        const [err, acl] = await safePromise(ACL.findOne({
+            where: {
+                userTypeID: user.userTypeID,
+                ApiName: req_url,
+                Active: 1
             }
-            console.log('I am User');
+        }))
+
+        if (err) {
+            console.log('err: ', err);
+            return res.json({
+                status: 'error',
+                message: 'Something went wrong'
+            }).status(500)
         }
 
-        // * 2 = Admin, 3 = Owner
-        if (req_url.includes("/admin")) {
-            if (user.userTypeID === 1) {
-                return res.status(401).send("Unauthorized!");
-            }
-            console.log('I must be Admin Or Owner');
+        if (!acl) {
+            return res.status(401).send("Unauthorized!");
         }
 
-        // * 3 = Owner
-        if (req_url.includes("/owner")) {
-            if (user.userTypeID !== 3) {
-                return res.status(401).send("Unauthorized!");
-            }
-            console.log('I am Owner');
-        }
+        console.log('Authorized!!!')
+
         req.user = user;
         next();
     } catch (error) {
