@@ -58,16 +58,17 @@ Independent Authentication+Authorization Service with resource service (Micro-Se
    	      		  }
           
           3. Auth Service has three private routes:
+            - Api Names has been maintained inside the ACL(access control list) table in mysql
       
-            i. 'api/getUserData'
+            i. '/getUserData'
                - only users can access this route
                - get user data by userId present in JWT provided by the user
          
-            ii. 'api/admin'
+            ii. '/admin'
                - only admin & owner can access this route
                - if userTypeID is owner or admin
          
-            iii. 'api/owner'
+            iii. '/owner'
                - only owner can access this route
                - if userTypeID is owner
          
@@ -86,8 +87,17 @@ Independent Authentication+Authorization Service with resource service (Micro-Se
 
 ```js
 interface user_type {
- UserTypeID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
- Description varchar(100)
+    UserTypeID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    Description varchar(100)
+}
+
+interface acl {
+    ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    ApiName VARCHAR(200) NOT NULL,
+    userTypeID INT,
+    Active Boolean NOT NULL,
+    CONSTRAINT fk_category1 FOREIGN KEY (userTypeID) 
+       REFERENCES user_type(userTypeID)
 }
 
 interface users {
