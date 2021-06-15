@@ -50,7 +50,8 @@ Independent Authentication+Authorization Service with resource service (Micro-Se
          
           2. login
             - When user,admin or owner login, below payload is saved inside the Json Web Token & authorization on routes are based on the userTypeID
-              saved in the payload.
+              saved in the payload.<br/><br/>
+            
             eg:: {
    	      			  userId,
    	      			  userTypeID,
